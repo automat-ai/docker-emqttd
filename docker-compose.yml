@@ -8,8 +8,6 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
       - PGDATA=/var/lib/postgresql/data/databases
-    networks:
-      - mqtt
     ports:
       - 5432:5432
     volumes:
@@ -20,8 +18,6 @@ services:
       context: .
       dockerfile: Dockerfile
     image: automat/emqttd
-    networks:
-      - mqtt
     environment:
       - POSTGRES=true
       - POSTGRES_USER=postgres
@@ -41,15 +37,3 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=mqtt
-    networks:
-      - mqtt
-
-networks:
-  mqtt:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.238.0/24
-        gateway: 172.16.238.254
-        ip-range: 172.16.238.0/24
